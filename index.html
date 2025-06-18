@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧引航，畅行无忧</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #0066cc;
+            --secondary: #00a0e9;
+            --light: #f0f8ff;
+            --dark: #003366;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --font-base: 16ps;
+        }
+
+        /* 背景图设置 - 仅修改白框以外的背景 */
+        body {
+            /* 移除原渐变背景 */
+            background: none;
+            /* 设置新的页面背景图 - 替换为你的图片路径 */
+            background-image: url('背景图\安检小资讯背景图.jpg');
+            background-size: cover; /* 覆盖整个背景 */
+            background-position: center; /* 背景图居中 */
+            background-attachment: fixed; /* 固定背景，不随滚动条移动 */
+            min-height: 100vh;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 内容容器样式优化 - 确保中间白框不受背景影响 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white; /* 白色内容区域背景 */
+            border-radius: 15px; /* 增加圆角使白框更美观 */
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); /* 增加阴影效果突出白框 */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0; /* 减少内边距 */
+            background: none; /* 移除背景 */
+            border-radius: 0; /* 移除圆角 */
+            box-shadow: none; /* 移除阴影 */
+            animation: fadeIn 1s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .module {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            animation: slideUp 0.5s ease;
+            border: 3px solid transparent; /* 初始透明边框 */
+        }
+
+        .module.highlight {
+            border: 3px solid var(--primary); /* 蓝色高亮边框 */
+            box-shadow: 0 0 0 5px rgba(0, 102, 204, 0.2); /* 蓝色光晕效果 */
+        }
+
+        .module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .module i {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .module h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .module p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .sub-module-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .sub-module {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 1;
+            border: 2px solid transparent; /* 初始透明边框 */
+        }
+
+        .sub-module.highlight {
+            border: 2px solid var(--primary); /* 蓝色高亮边框 */
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2); /* 蓝色光晕效果 */
+        }
+
+        .sub-module.hidden {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .sub-module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .sub-module i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .sub-module h3 {
+            font-size: 1.3rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .page {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+            margin-top: 30px;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .back-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 65px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--dark);
+            transform: scale(1.05);
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent; /* 初始透明边框 */
+        }
+
+        .detail-card.highlight {
+            border: 2px solid var(--primary); /* 蓝色高亮边框 */
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2); /* 蓝色光晕效果 */
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .detail-card h4 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-card i {
+            font-size: 1.5rem;
+        }
+
+        .content-area {
+            margin-top: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            min-height: 300px;
+        }
+
+        .search-container {
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .search-box {
+            padding: 12px 20px;
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(0, 160, 233, 0.2);
+        }
+
+        .search-box::placeholder {
+            color: #999;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* PDF嵌入容器响应式设置 */
+        embed, object {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid, .sub-module-grid, .detail-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header, .module {
+                padding: 20px 15px;
+                min-height: auto;
+            }
+
+            .logo i {
+                font-size: 2rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .module i {
+                font-size: 2.5rem;
+            }
+
+            .sub-module, .detail-card{
+                padding: 20px  15px;
+            }
+
+            .sub-module i {
+                font-size: 2rem;
+            }
+
+            .page-header{
+                padding-bottom: 10px;
+            }
+
+            .bank-btn{
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .content-area, .search-container{
+                padding: 20px 15px;
+            }
+
+            .search-box{
+                padding: 10px 15px;
+            }
+
+            @media(max-width: 480px){
+                .module, .sub-module{
+                    min-height: 250px;
+                }
+
+                .module i {
+                    font-size: 2rem;
+                }
+
+                .sub-module i {
+                    font-size: 1.8rem;
+                }
+
+                .detail-card{
+                    padding: 15px;
+                }
+
+                .image-card {
+                    max-width: 95%;
+                }
+            }
+
+            /*大图模态框优化*/
+            .modal-content{
+                width: 90%;
+                max-height: 70vh;
+                margin-top: 15vh;
+            }
+
+            .close-btn{
+                top: 10px;
+                right: 10px;
+                font-size: 28px;
+            }
+        }
+
+        /* 安检知识页面背景强化 */
+        #security-info .container {
+            background: white; /* 确保安检知识页面内容区域背景一致 */
+        }
+
+        /* 响应式背景图优化 */
+        @media (max-width: 768px) {
+            body {
+                background-size: cover;
+                background-position: center;
+            }
+            
+            .container {
+                padding: 10px;
+                border-radius: 0; /* 小屏幕移除圆角 */
+            }
+        }
+
+        /* 图标替代方案 */
+        .fa, .fas {
+            font-family: Arial;
+            font-weight: 900;
+        }
+        .fa-info-circle:before { content: "ℹ️"; }
+        .fa-bolt:before { content: "⚡"; }
+        .fa-snowboarding:before { content: "🏂"; }
+        .fa-paw:before { content: "🐾"; }
+        .fa-tint:before { content: "💧"; }
+        .fa-heartbeat:before { content: "❤️"; }
+        .fa-file-alt:before { content: "📄"; }
+        .fa-image:before { content: "🖼️"; }
+        .fa-exclamation-triangle:before { content: "⚠️"; }
+        .fa-arrow-left:before { content: "返回"; }
+        .fa-file-pdf:before { content: "📄"; }
+        .fa-camera:before { content: "📷"; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 首页 - 仅保留标题和安检知识模块 -->
+        <div id="home-page" class="page active">
+            <header>
+                <div class="logo">
+                    <i class="fa fa-plane-departure"></i>
+                    <div>
+                        <h1>智慧引航，畅行无忧</h1>
+                        <p class="subtitle">新疆机场集团安检信息查询系统</p>
+                    </div>
+                </div>
+            </header>
+
+            <div class="main-grid">
+                <!-- 安检知识小资讯模块（与标题同大小） -->
+                <div class="module highlight" onclick="showPage('security-info')">
+                    <i class="fa fa-info-circle"></i>
+                    <h2>安检知识小资讯</h2>
+                    <p>详细了解机场安检规定与注意事项</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 安检知识小资讯主页面 - 添加了搜索功能 -->
+        <div id="security-info" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="showPage('home-page')">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>安检知识小资讯</h2>
+            </div>
+
+            <div class="search-container">
+                <input type="text" class="search-box" id="module-search" placeholder="搜索安检知识...">
+            </div>
+
+            <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+                以下是机场安检常见物品的详细规定，点击模块查看具体内容
+            </p>
+
+            <!-- 一级子模块（5个大类） -->
+            <div class="sub-module-grid" id="module-container">
+                <div class="sub-module highlight" data-keywords="充电宝 锂电池 电池 破损 三五" onclick="openNewPage('battery-security')">
+                    <i class="fa fa-bolt"></i>
+                    <h3>充电宝、锂电池类</h3>
+                </div>
+
+                <div class="sub-module highlight" data-keywords="雪崩 救援 背包 安全" onclick="openNewPage('avalanche-backpack')">
+                    <i class="fa fa-snowboarding"></i>
+                    <h3>雪崩救援背包</h3>
+                </div>
+
+                <div class="sub-module highlight" data-keywords="海航 客舱 宠物 运输 动物 猫 狗 鸡 鸭 鹅 蛇 猴子 鹦鹉" onclick="openNewPage('pet-transport')">
+                    <i class="fa fa-paw"></i>
+                    <h3>海航客舱宠物运输</h3>
+                </div>
+
+                <div class="sub-module highlight" data-keywords="液态 物品 携带 液体 规定 水 可乐 雪碧 饮料 " onclick="openNewPage('liquid-goods')">
+                    <i class="fa fa-tint"></i>
+                    <h3>液态物品携带</h3>
+                </div>
+
+                <div class="sub-module highlight" data-keywords="携运 人体 捐献 器官 运输 心脏 心 肝 脾 胃 肾" onclick="openNewPage('organ-transport')">
+                    <i class="fa fa-heartbeat"></i>
+                    <h3>携运人体捐献器官</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- 充电宝、锂电池类详情页面 -->
+        <div id="battery-security" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="showPage('security-info')">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>充电宝、锂电池类</h2>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+                以下是充电宝及锂电池类物品的安检规定，点击模块查看具体内容
+            </p>
+
+            <!-- 二级子模块（4个小类） -->
+            <div class="detail-grid">
+                <div class="detail-card highlight" onclick="openNewPage('battery-regulations')">
+                    <h4><i class="fa fa-file-alt"></i> 相关规定</h4>
+                    <p>关于充电宝、锂电池携带的具体规定</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('battery-document')">
+                    <h4><i class="fa fa-file-pdf"></i> 文件要求</h4>
+                    <p>携带此类物品所需的文件及证明</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('battery-pictures')">
+                    <h4><i class="fa fa-image"></i> 现场图片</h4>
+                    <p>安检现场对此类物品的检查示例</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('battery-risks')">
+                    <h4><i class="fa fa-exclamation-triangle"></i> 风险提示</h4>
+                    <p>携带此类物品的注意事项及风险</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 雪崩救援背包详情页面 -->
+        <div id="avalanche-backpack" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="showPage('security-info')">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>雪崩救援背包</h2>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+                以下是雪崩救援背包的安检规定，点击模块查看具体内容
+            </p>
+
+            <div class="detail-grid">
+                <div class="detail-card highlight" onclick="openNewPage('avalanche-regulations')">
+                    <h4><i class="fa fa-file-alt"></i> 相关规定</h4>
+                    <p>雪崩救援背包携带的具体规定</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('avalanche-document')">
+                    <h4><i class="fa fa-file-pdf"></i> 文件要求</h4>
+                    <p>携带雪崩救援背包所需的文件及证明</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('avalanche-pictures')">
+                    <h4><i class="fa fa-image"></i> 现场图片</h4>
+                    <p>雪崩救援背包安检现场的检查示例</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('avalanche-risks')">
+                    <h4><i class="fa fa-exclamation-triangle"></i> 风险提示</h4>
+                    <p>携带雪崩救援背包的注意事项及风险</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 海航客舱宠物运输详情页面 -->
+        <div id="pet-transport" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="showPage('security-info')">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>海航客舱宠物运输</h2>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+                以下是海航客舱宠物运输的安检规定，点击模块查看具体内容
+            </p>
+
+            <div class="detail-grid">
+                <div class="detail-card highlight" onclick="openNewPage('pet-regulations')">
+                    <h4><i class="fa fa-file-alt"></i> 相关规定</h4>
+                    <p>海航客舱宠物运输的具体规定</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('pet-document')">
+                    <h4><i class="fa fa-file-pdf"></i> 文件要求</h4>
+                    <p>携带宠物所需的文件及证明</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('pet-pictures')">
+                    <h4><i class="fa fa-image"></i> 现场图片</h4>
+                    <p>宠物安检现场的检查示例</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('pet-risks')">
+                    <h4><i class="fa fa-exclamation-triangle"></i> 风险提示</h4>
+                    <p>携带宠物的注意事项及风险</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 液态物品携带规定详情页面 -->
+        <div id="liquid-goods" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="showPage('security-info')">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>液态物品携带</h2>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+                以下是液态物品携带的安检规定，点击模块查看具体内容
+            </p>
+
+            <div class="detail-grid">
+                <div class="detail-card highlight" onclick="openNewPage('liquid-regulations')">
+                    <h4><i class="fa fa-file-alt"></i> 相关规定</h4>
+                    <p>液态物品携带的具体规定</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('liquid-document')">
+                    <h4><i class="fa fa-file-pdf"></i> 文件要求</h4>
+                    <p>携带液态物品所需的文件及证明</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('liquid-pictures')">
+                    <h4><i class="fa fa-image"></i> 现场图片</h4>
+                    <p>液态物品安检现场的检查示例</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('liquid-risks')">
+                    <h4><i class="fa fa-exclamation-triangle"></i> 风险提示</h4>
+                    <p>携带液态物品的注意事项及风险</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 携运人体捐献器官详情页面 -->
+        <div id="organ-transport" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="showPage('security-info')">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>携运人体捐献器官</h2>
+            </div>
+
+            <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+                以下是携运人体捐献器官的安检规定，点击模块查看具体内容
+            </p>
+
+            <div class="detail-grid">
+                <div class="detail-card highlight" onclick="openNewPage('organ-regulations')">
+                    <h4><i class="fa fa-file-alt"></i> 相关规定</h4>
+                    <p>携运人体捐献器官的具体规定</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('organ-document')">
+                    <h4><i class="fa fa-file-pdf"></i> 文件要求</h4>
+                    <p>携运器官所需的文件及证明</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('organ-pictures')">
+                    <h4><i class="fa fa-image"></i> 现场图片</h4>
+                    <p>器官运输安检现场的检查示例</p>
+                </div>
+
+                <div class="detail-card highlight" onclick="openNewPage('organ-risks')">
+                    <h4><i class="fa fa-exclamation-triangle"></i> 风险提示</h4>
+                    <p>携运器官的注意事项及风险</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 三级详情页面 - 相关规定 -->
+        <div id="battery-regulations" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="showPage('battery-security')">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>充电宝、锂电池类 - 相关规定</h2>
+            </div>
+
+            <div class="content-area">
+                <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">充电宝、锂电池类物品安检规定</h3>
+                
+                <p style="margin-bottom: 15px; text-align: center;">
+                   民用航空安全检查工作手册第一百三十八条
+                </p>
+                <p style="margin-bottom: 15px; text-align: justify;">
+                  （一）充电宝、锂电池禁止作为行李托运，随身携带时有以下限定条件(电动轮椅使用的锂电池另有规定): 1.标识全面清晰，额定能量小于或等于 100Wh; 2.当额定能量大于 100Wh、小于或等于 160Wh 时必须经航空公司批准且每人限带两块。
+                </p>
+                <p style="margin-bottom: 15px; text-align: justify;">
+                  （二）可能存在安全缺陷的锂电池，如废弃锂电池、生产厂家召回的锂电池、破损或鼓包的锂电池等。
+                </p>
+            </div>
+        </div>
+
+     <!-- 三级详情页面 - 文件要求 -->
+<div id="battery-document" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('battery-security')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>充电宝、锂电池类 - 文件要求</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带锂电池类物品文件</h3>
+        
+        <!-- 图片展示区域 - 修改为垂直排列 -->
+        <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+            <!-- 图片1 -->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img1')">
+                <img id="img1" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_1.png" alt="第一页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第一页</p>
+            </div>
+            
+            <!-- 图片2-8如下-->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img2')">
+                <img id="img2" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_2.png" alt="第二页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第二页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img3')">
+                <img id="img3" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_3.png" alt="第三页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第三页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img4')">
+                <img id="img4" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_4.png" alt="第四页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第四页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img5')">
+                <img id="img5" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_5.png" alt="第五页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第五页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img6')">
+                <img id="img6" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_6.png" alt="第六页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第六页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img7')">
+                <img id="img7" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_7.png" alt="第七页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第七页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img8')">
+                <img id="img8" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_8.png" alt="第八页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第八页</p>
+            </div>
+
+	 <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img9')">
+                <img id="img9" src="WJyaoqiu\旅客和机组携带危险品的航空运输规范\旅客和机组携带危险品的航空运输规范-充电宝_00.png" alt="第九页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第九页</p>
+            </div>
+        </div>
+
+        <!-- 备选内容：浏览器不支持PDF嵌入时显示 -->
+<div style="padding: 20px; color: #666; border: 1px dashed #ddd; border-radius: 8px; margin-top: 20px;text-align:center;">
+    <p>若要查看完整的PDF文件，可点击本链接下载：</p>
+    <!-- 第一个下载链接，用p标签包裹实现换行 -->
+    <p>
+        <a href="WJyaoqiu/中国民用航空局公告/href.pdf" target="_blank" 
+           style="color: var(--primary); text-decoration: underline;">
+            点击下载文件——中国民用航空局公告
+        </a>
+    </p>
+    <!-- 第二个下载链接，用p标签包裹实现换行 -->
+    <p>
+        <a href="WJyaoqiu/旅客和机组携带危险品的航空运输规范/jzlk.pdf" target="_blank" 
+           style="color: var(--primary); text-decoration: underline;">
+            点击下载文件——旅客和机组携带危险品的航空运输规范
+        </a>
+    </p>
+</div>
+    </div>
+</div>
+
+<!-- 大图查看模态框 -->
+<div id="imageModal" class="modal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);">
+    <div class="modal-content" style="margin: auto; display: block; width: 80%; max-width: 1200px; max-height: 80vh; margin-top: 50px;">
+        <img id="modalImage" src="" alt="放大查看" style="width: 100%; height: auto;">
+    </div>
+    <button class="close-btn" onclick="closeModal()" style="position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer;">×</button>
+</div>
+
+
+        <!-- 三级详情页面 - 现场图片 -->
+<div id="battery-pictures" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('battery-security')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>充电宝、锂电池类 - 现场图片</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">锂电池类物品安检现场示例</h3>
+        
+        <!-- 图片展示区域 -->
+        <div class="image-gallery" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+            <!-- 第一张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/1.充电宝、锂电池类/图片1.png" alt="锂电池安检流程示例" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">充电宝破裂</p>
+            </div>
+            
+            <!-- 第二张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/1.充电宝、锂电池类/图片2.png" alt="合格与不合格锂电池对比" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">虚假充电宝</p>
+            </div>
+	
+	<!-- 第三张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/1.充电宝、锂电池类/参数虚标产品.png" alt="参数虚标产品" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">参数虚标产品</p>
+            </div>
+
+	<!-- 第si张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/1.充电宝、锂电池类/充电宝严重破损.png" alt="充电宝严重破损" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">充电宝严重破损</p>
+            </div>
+
+<!-- 第wu张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/1.充电宝、锂电池类/额定能量超标且外观破损.png" alt="额定能量超标且外观破损" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">额定能量超标且外观破损</p>
+            </div>
+
+<!-- 第liu张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/1.充电宝、锂电池类/三无改装产品.png" alt="三无改装产品" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">三无改装产品</p>
+            </div>
+
+<!-- 第qi张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/1.充电宝、锂电池类/无标识信息.png" alt="无标识信息" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">无标识信息</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+      <!-- 三级详情页面 - 风险提示 -->
+<div id="battery-risks" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('battery-security')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>充电宝、锂电池类 - 风险提示</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带锂电池类物品的风险与注意事项</h3>
+        
+        <!-- 视频1 -->
+        <div class="video-container" style="margin-bottom: 30px; text-align: center;">
+            <h4>视频1：锂电池安全风险演示</h4>
+            <video width="80%" controls poster="https://picsum.photos/800/450?random=1">
+                <source src="FXtishi\视频1-1.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+            <p class="video-description" style="margin-top: 10px; text-align: center;">
+                本视频演示了充电宝充电过热、短路等安全风险的典型场景。
+            </p>
+        </div>
+        
+        <!-- 视频2 -->
+        <div class="video-container" style="margin-bottom: 30px; text-align: center;">
+            <h4>视频2：锂电池携带与保存指南</h4>
+            <video width="80%" controls poster="https://picsum.photos/800/450?random=2">
+                <source src="FXtishi\视频1-2.mp4" type="video/mp4">
+                您的浏览器不支持视频播放。
+            </video>
+            <p class="video-description" style="margin-top: 10px; text-align: center;">
+                本视频介绍了充电宝未正确携带发生安全事故。
+            </p>
+        </div>
+    </div>
+</div>
+
+
+    <!-- 三级详情页面 - 相关规定 -->
+<div id="avalanche-regulations" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('avalanche-backpack')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>雪崩救援背包 - 相关规定</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">雪崩救援背包安检规定</h3>
+        
+        <p style="margin-bottom: 15px; text-align: justify;">
+          &emsp;&emsp;经营运人批准，允许作为行李运输的物品。每人可携带一件雪崩救援包，可内装有净重不超过200mg的1.4项烟火引发装置及净重不超过250mg的2.2项压缩气体，这种雪崩救援背包的包装方式必须保证不意外启动，背包内的空气袋必须安装减压阀。
+        </p>
+     </div>
+</div>
+
+        <!-- 雪崩救援背包 - 文件要求 -->
+<div id="avalanche-document" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('avalanche-backpack')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>雪崩救援背包 - 文件要求</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带雪崩救援背包文件</h3>
+         <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+            <!-- 图片1 -->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img10')">
+                <img id="img10" src="WJyaoqiu\旅客和机组携带危险品的航空运输规范\旅客和机组携带危险品的航空运输规范-雪崩背包_00.png" alt="第一页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第一页</p>
+            </div>
+	</div>
+     
+    <!-- 备选内容：浏览器不支持PDF嵌入时显示 -->
+    <div style="padding: 20px; color: #666; border: 1px dashed #ddd; border-radius: 8px;text-align: center;">
+        <p>若要查看完整的PDF文件，可点击本链接下载：</p>
+        <a href="WJyaoqiu/旅客和机组携带危险品的航空运输规范/jzlk.pdf" target="_blank" style="color: var(--primary); text-decoration: underline;">
+            点击下载文件详情
+        </a>
+    </div>
+</div>
+</div>
+</div>
+
+
+        <!-- 雪崩救援背包 - 现场图片 -->
+<div id="avalanche-pictures" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('avalanche-backpack')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>雪崩救援背包 - 现场图片</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">雪崩救援背包安检现场示例</h3>
+        
+        <div class="image-gallery" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px;">
+            <!-- 第一张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/2.雪崩救援背包/图片3.png" alt="雪崩背包安检流程" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500; margin: 0;">雪崩背包安检流程</p>
+            </div>
+            
+            <!-- 第二张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/2.雪崩救援背包/图片4.png" alt="雪崩背包安检操作" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500; margin: 0;">雪崩背包安检操作</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- 雪崩救援背包 - 风险提示 -->
+<div id="avalanche-risks" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('avalanche-backpack')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>雪崩救援背包 - 风险提示</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带雪崩救援背包的风险与注意事项</h3>
+        
+        <div class="risk-image-container" style="text-align: center; margin: 20px 0;">
+            <img src="FXtishi/图片2.png" alt="雪崩救援背包风险提示图" style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 15px; font-weight: 500;">雪崩救援背包安全风险示意图</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- 海航客舱宠物运输 - 相关规定 -->
+<div id="pet-regulations" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('pet-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>海航客舱宠物运输 - 相关规定</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">海南航空客舱宠物运输规定</h3>
+        
+        <div class="regulation-container" style="background: #f9f9f9; border-radius: 10px; padding: 20px; margin-bottom: 20px;">
+            <p style="font-weight: 600; margin-bottom: 15px;text-align: center;">仅限海南航空公司</p>
+            
+            <ol style="padding-left: 20px; line-height: 1.8;">
+                <li style="margin-bottom: 10px;">动物卫生监督所出具的《动物检疫合格证明》。</li>
+                <li style="margin-bottom: 10px;">宠物疫苗注射证明。</li>
+                <li>运输协议书：旅客阅读并填写《客舱运输宠物协议书》（附件1），并逐一签字确认（宠物信息栏目各项必填）。</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- 海航客舱宠物运输 - 文件要求 -->
+<div id="pet-document" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('pet-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>海航客舱宠物运输 - 文件要求</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带宠物所需文件</h3>
+        
+        <!-- 图片展示区域 - 垂直排列 -->
+        <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+            <!-- 图片1-16 (类似结构，仅修改编号和alt文本) -->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg1')">
+                <img id="petImg1" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_1.png" alt="宠物携带规定第1页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第一页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg2')">
+                <img id="petImg2" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_2.png" alt="宠物携带规定第2页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第二页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg3')">
+                <img id="petImg3" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_3.png" alt="宠物携带规定第3页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第三页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg4')">
+                <img id="petImg4" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_4.png" alt="宠物携带规定第4页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第四页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg5')">
+                <img id="petImg5" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_5.png" alt="宠物携带规定第5页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第五页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg6')">
+                <img id="petImg6" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_6.png" alt="宠物携带规定第6页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第六页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg7')">
+                <img id="petImg7" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_7.png" alt="宠物携带规定第7页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第七页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg8')">
+                <img id="petImg8" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_8.png" alt="宠物携带规定第8页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第八页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg9')">
+                <img id="petImg9" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_9.png" alt="宠物携带规定第9页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第九页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg10')">
+                <img id="petImg10" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_10.png" alt="宠物携带规定第10页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第十页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg11')">
+                <img id="petImg11" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_11.png" alt="宠物携带规定第11页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第十一页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg12')">
+                <img id="petImg12" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_12.png" alt="宠物携带规定第12页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第十二页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg13')">
+                <img id="petImg13" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_13.png" alt="宠物携带规定第13页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第十三页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg14')">
+                <img id="petImg14" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_14.png" alt="宠物携带规定第14页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第十四页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg15')">
+                <img id="petImg15" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_15.png" alt="宠物携带规定第15页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第十五页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('petImg16')">
+                <img id="petImg16" src="WJyaoqiu\海南航空控股股份有限公司客舱运\客舱运输宠物规定_16.png" alt="宠物携带规定第16页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第十六页</p>
+            </div>
+        </div>
+
+        <!-- 备选内容：浏览器不支持PDF嵌入时显示 -->
+        <div style="padding: 20px; color: #666; border: 1px dashed #ddd; border-radius: 8px; margin-top: 20px; text-align: center;">
+            <p>若要查看完整的PDF文件，可点击本链接下载：</p>
+            <p>
+                <a href="WJyaoqiu/海南航空控股股份有限公司客舱运/hk.pdf" target="_blank" 
+                   style="color: var(--primary); text-decoration: underline;">
+                    点击下载文件——海南航空客舱运输宠物规定
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- 大图查看模态框 (复用之前的模态框，确保页面中只有一个) -->
+<div id="imageModal" class="modal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);">
+    <div class="modal-content" style="margin: auto; display: block; width: 80%; max-width: 1200px; max-height: 80vh; margin-top: 50px;">
+        <img id="modalImage" src="" alt="放大查看" style="width: 100%; height: auto;">
+    </div>
+    <button class="close-btn" onclick="closeModal()" style="position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; cursor: pointer;">×</button>
+</div>
+
+<!-- 海航客舱宠物运输 - 现场图片 -->
+<div id="pet-pictures" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('pet-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>海航客舱宠物运输 - 现场图片</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">宠物安检现场示例</h3>
+        
+        <div class="image-gallery" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px;">
+            <!-- 第一张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/3.海航客舱宠物运输通知/图片5.jpg" alt="宠物安检流程" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500; margin: 0;">宠物安检流程</p>
+            </div>
+            
+            <!-- 第二张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/3.海航客舱宠物运输通知/图片6.jpg" alt="宠物容器检查" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500; margin: 0;">宠物容器检查</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 海航客舱宠物运输 - 风险提示 -->
+<div id="pet-risks" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('pet-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>海航客舱宠物运输 - 风险提示</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带宠物的注意事项</h3>
+        
+        <div class="risk-image-container" style="text-align: center; margin: 20px 0;">
+            <img src="FXtishi/图片3.png" alt="宠物运输风险提示" style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 15px; font-weight: 500;">宠物运输注意事项示意图</p>
+        </div>
+    </div>
+</div>
+
+<!-- 液态物品携带规定 - 相关规定 -->
+<div id="liquid-regulations" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('liquid-goods')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>液态物品携带规定 - 相关规定</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">国内航班液态物品携带规定</h3>
+        
+        <div class="regulation-container" style="background: #f9f9f9; border-radius: 10px; padding: 20px; line-height: 1.8;">
+            <p style="margin-bottom: 15px; text-align: justify;">
+       &emsp;&emsp;旅客乘坐国内航班时，液态物品禁止随身携带（航空旅行途中自用的化妆品、牙膏及剃须膏除外）。 航空旅行途中自用的化妆品必须同时满足三个条件（每种限带一件、盛放在单体容器容积不超过100mL的容器内、接受开瓶检查）方可随身携带，牙膏及剃须膏限带一件且不得超过100g（mL）。旅客在同一机场控制区内由国际、地区航班转乘国内航班时，其随身携带入境的免税液态物品必须同时满足三个条件（出示购物凭证、置于已封口且完好无损的透明塑料袋中、经安全检查确认）方可随身携带，如果在转乘国内航班过程中离开机场控制区则必须将随身携带入境的免税液态物品作为行李托运。
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- 液态物品携带规定 - 文件要求 -->
+<div id="liquid-document" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('liquid-goods')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>液态物品携带规定 - 文件要求</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带液态物品所需文件</h3>
+        
+         <!-- 图片展示区域 - 修改为垂直排列 -->
+        <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+            <!-- 图片1 -->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img1')">
+                <img id="img1" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_1.png" alt="第一页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第一页</p>
+            </div>
+            
+            <!-- 图片2-8如下-->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img2')">
+                <img id="img2" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_2.png" alt="第二页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第二页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img3')">
+                <img id="img3" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_3.png" alt="第三页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第三页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img4')">
+                <img id="img4" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_4.png" alt="第四页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第四页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img5')">
+                <img id="img5" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_5.png" alt="第五页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第五页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img6')">
+                <img id="img6" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_6.png" alt="第六页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第六页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img7')">
+                <img id="img7" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_7.png" alt="第七页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第七页</p>
+            </div>
+            
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img8')">
+                <img id="img8" src="WJyaoqiu\中国民用航空局公告\中国民用航空局公告_8.png" alt="第八页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第八页</p>
+            </div>
+	</div>
+
+            <!-- 备选内容 -->
+            <div style="padding: 20px; color: #666; border: 1px dashed #ddd; border-radius: 8px; text-align: center;">
+                <p>若要查看完整的PDF文件，可点击本链接下载：</p>
+                <a href="WJyaoqiu/中国民用航空局公告/href.pdf" target="_blank" style="color: var(--primary); text-decoration: underline;">
+                    点击下载文件详情
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 液态物品携带规定 - 现场图片 -->
+<div id="liquid-pictures" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('liquid-goods')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>液态物品携带规定 - 现场图片</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">液态物品安检现场示例</h3>
+        
+        <div class="image-container" style="text-align: center; margin: 20px 0;">
+            <img src="XCtupian/4.液态物品携带规定/图片7.png" alt="液态物品安检现场" style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 15px; font-weight: 500;">液态物品安检操作现场</p>
+        </div>
+    </div>
+</div>
+
+<!-- 液态物品携带规定 - 风险提示 -->
+<div id="liquid-risks" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('liquid-goods')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>液态物品携带规定 - 风险提示</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携带液态物品的注意事项</h3>
+        
+        <div class="risk-image-container" style="text-align: center; margin: 20px 0;">
+            <img src="FXtishi/图片4.png" alt="液态物品携带风险" style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 15px; font-weight: 500;">液态物品携带风险提示示意图</p>
+        </div>
+    </div>
+</div>
+
+<!-- 携运人体捐献器官 - 相关规定 -->
+<div id="organ-regulations" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('organ-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>携运人体捐献器官 - 相关规定</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">人体捐献器官携运安检规定</h3>
+        
+        <div class="regulation-container" style="background: #f9f9f9; border-radius: 10px; padding: 20px; line-height: 1.8;">
+            <p style="margin-bottom: 15px; text-align: justify;">
+                &emsp;&emsp;携运人体捐献器官的，优先安检。应当要求出具移植中心器官接收确认书和公共航空运输企业或其地面服务代理机构书面同意承运证明，核查人体器官获取组织工作人员身份信息与移植中心机关接收确认书信息一致，核验人体器官运输专用标志，对运输箱及内容物通过民航行李安检设备进行检查，无疑点的不再进行开箱检查，并留存移植中心器官接收确认书副本和公共航空运输企业或其地面服务代理机构书面同意承运证明放行。
+            </p>
+            <p style="margin-bottom: 15px; text-align: justify;">
+                &emsp;&emsp;保存人体捐献器官所必需的液态物品不受液态物品民航运输条件的限制，人体器官获取组织工作人员及其携运的其他行李物品应当按正常程序接受检查。
+            </p>
+            <p style="margin-bottom: 15px; text-align: justify;">
+                &emsp;&emsp;上述物品需要使用危险品作为冷藏（冻）剂的，凭公共航空运输企业或其地面服务代理机构书面同意承运证明放行。
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- 携运人体捐献器官 - 文件要求 -->
+<div id="organ-document" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('organ-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>携运人体捐献器官 - 文件要求</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携运人体捐献器官文件</h3>
+         
+<!-- 图片展示区域 - 垂直排列 -->
+        <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+           
+           <!-- 图片1 -->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img11')">
+                <img id="img11" src="WJyaoqiu\民用航空安检检查手册\民用航空安检检查手册_1.png" alt="第一页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第一页</p>
+            </div>
+            
+            <!-- 图片2如下-->
+            <div class="image-card" style="max-width: 80%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); cursor: pointer;" onclick="openModal('img12')">
+                <img id="img12" src="WJyaoqiu\民用航空安检检查手册\民用航空安检检查手册_2.png" alt="第二页" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500;">第二页</p>
+            </div>
+
+                    <!-- 备选内容 -->
+            <div style="padding: 20px; color: #666; border: 1px dashed #ddd; border-radius: 8px;">
+                <p>若您的浏览器不支持直接查看PDF，可点击下方链接下载：</p>
+                <a href="WJyaoqiu/民用航空安检检查手册/ajjcsc.pdf" target="_blank" style="color: var(--primary); text-decoration: underline;">
+                    点击下载文件详情
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 携运人体捐献器官 - 现场图片 -->
+<div id="organ-pictures" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('organ-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>携运人体捐献器官 - 现场图片</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">人体捐献器官运输安检现场示例</h3>
+        
+        <div class="image-gallery" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 20px;">
+            <!-- 第一张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/5.携运人体捐献器官/图片8.png" alt="器官运输安检流程" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500; margin: 0;">器官运输安检流程</p>
+            </div>
+            
+            <!-- 第二张图片 -->
+            <div class="image-card" style="max-width: 45%; background: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <img src="XCtupian/5.携运人体捐献器官/图片9.png" alt="器官运输箱检查" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px;">
+                <p style="text-align: center; font-weight: 500; margin: 0;">器官运输箱检查</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 携运人体捐献器官 - 风险提示 -->
+<div id="organ-risks" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('organ-transport')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>携运人体捐献器官 - 风险提示</h2>
+    </div>
+
+    <div class="content-area">
+        <h3 style="color: var(--primary); margin-bottom: 20px; text-align: center;">携运人体捐献器官的注意事项</h3>
+        
+        <div class="risk-image-container" style="text-align: center; margin: 20px 0;">
+            <img src="FXtishi/图片5.png" alt="器官携运风险提示" style="max-width: 80%; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+            <p style="margin-top: 15px; font-weight: 500;">人体捐献器官携运风险提示示意图</p>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        // 显示指定页面
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // 打开新网页
+        function openNewPage(pageId) {
+            showPage(pageId);
+        }
+
+        // 搜索功能优化实现
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchBox = document.getElementById('module-search');
+            const subModules = document.querySelectorAll('.sub-module');
+            const moduleContainer = document.getElementById('module-container');
+            let originalModuleOrder = []; // 存储原始模块顺序
+
+            // 保存原始模块顺序
+            subModules.forEach(module => {
+                originalModuleOrder.push(module);
+            });
+
+            searchBox.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                if (searchTerm === '') {
+                    // 清空搜索框，恢复原始顺序和显示
+                    subModules.forEach(module => {
+                        module.classList.remove('hidden');
+                        // 移除高亮类
+                        if(module.classList.contains('highlight')){
+                            module.classList.remove('highlight');
+                        }
+                    });
+                    // 恢复原始顺序
+                    originalModuleOrder.forEach(module => {
+                        moduleContainer.appendChild(module);
+                    });
+                } else {
+                    // 隐藏所有模块
+                    subModules.forEach(module => {
+                        module.classList.add('hidden');
+                        // 移除高亮类
+                        if(module.classList.contains('highlight')){
+                            module.classList.remove('highlight');
+                        }
+                    });
+                    
+                    // 筛选匹配模块并按原始顺序显示
+                    originalModuleOrder.forEach(module => {
+                        const keywords = module.getAttribute('data-keywords').toLowerCase();
+                        if (keywords.includes(searchTerm)) {
+                            module.classList.remove('hidden');
+                            module.classList.add('highlight'); // 为搜索结果添加高亮
+                            moduleContainer.appendChild(module); // 按原始顺序添加
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+<script>
+// 打开大图模态框
+function openModal(imgId) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    
+    // 设置模态框中的图片源和alt文本
+    modalImg.src = document.getElementById(imgId).src;
+    modalImg.alt = document.getElementById(imgId).alt;
+    
+    // 显示模态框
+    modal.style.display = 'block';
+    
+    // 点击模态框背景关闭
+    modal.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
+    
+    // 禁止背景滚动
+    document.body.style.overflow = 'hidden';
+}
+
+// 关闭大图模态框
+function closeModal() {
+    document.getElementById('imageModal').style.display = 'none';
+    // 恢复背景滚动
+    document.body.style.overflow = 'auto';
+}
+
+// 键盘ESC键关闭模态框
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
+
+</body>
+</html>

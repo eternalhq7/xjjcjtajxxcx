@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天山国际机场线路图</title>
+  <link rel="stylesheet" href="../css/sercurity-info.css">
+  <link rel="stylesheet" href="../css/logo.css">
+  <script src="../js/goToUpPage.js"></script> 
+  <script src="../js/history-back.js"></script> 
+  <script src="../js/search.js"></script> 
+  <script src="../js/opennewpage.js"></script> 
+</head>  
+
+<body>
+<div class="container">
+<div id="checkin-counter-info" class="page">
+            <div class="page-header">
+                <button class="back-btn" onclick="GoToUpPage()">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <h2>值机柜台分布</h2>
+            </div>
+
+<p style="margin-bottom: 15px; 
+           text-indent: 2em; /* 首行缩进 2 个汉字宽度（1em ≈ 1 个汉字） */
+           text-align: left; /* 确保文本左对齐（可省略，默认就是左对齐） */
+           line-height: 1.6; /* 可选：调整行间距，让排版更美观 */">
+  出发层共有6个值机岛，G/H/K/L/M办理国内航班，F岛办理国际及港澳台航班，旅客可根据所乘坐的航空公司前往相应值机岛办理乘机手续。具体航空公司分布如下：
+</p>
+
+            <div class="card-container" id="module-container">
+        <div class="card highlight"onclick="openNewPage('checkin-counter-info-1.html')">
+            <i class="fa fa-checkin-counter-info"></i>
+            <h3>国内航班值机柜台：</h3>
+		<h4>G/H/K/L/M岛</h4>
+        </div>
+
+        <div class="card highlight" onclick="openNewPage('checkin-counter-info-2.html')">
+            <i class="fa fa-checkin-counter-info"></i>
+              <h3>国际及港澳台航班值机柜台：</h3>
+		<h4>F岛</h4>
+        </div>
+
+        
+	
+
+
+
+        </div>
+</div>
+</body>
+
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安检知识小资讯</title>
+  <link rel="stylesheet" href="../css/sercurity-info.css">
+  <script src="../js/history-back.js"></script> 
+</head>
+
+<body>
+<div id="security-info" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="showPage('home-page')">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>安检知识小资讯</h2>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" class="search-box" id="module-search" placeholder="搜索安检知识...">
+    </div>
+
+    <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+        以下是机场安检常见物品的详细规定，点击模块查看具体内容
+    </p>
+
+    <!-- 一级子模块（5个大类） -->
+    <div class="card-container" id="module-container">
+        <div class="card highlight" data-keywords="充电宝 锂电池 电池 破损 三无" onclick="openNewPage('battery-security')">
+            <i class="fa fa-bolt"></i>
+            <h3>充电宝、锂电池类</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="雪崩 救援 背包 安全" onclick="openNewPage('avalanche-backpack')">
+            <i class="fa fa-snowboarding"></i>
+            <h3>雪崩救援背包</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="海航 客舱 宠物 运输 动物 猫 狗 鸡 鸭 鹅 蛇 猴子 鹦鹉" onclick="openNewPage('pet-transport')">
+            <i class="fa fa-paw"></i>
+            <h3>海航客舱宠物运输</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="液态 物品 携带 液体 规定 水 可乐 雪碧 饮料 " onclick="openNewPage('liquid-goods')">
+            <i class="fa fa-tint"></i>
+            <h3>液态物品携带</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="携运 人体 捐献 器官 运输 心脏 心 肝 脾 胃 肾" onclick="openNewPage('organ-transport')">
+            <i class="fa fa-heartbeat"></i>
+            <h3>携运人体捐献器官</h3>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

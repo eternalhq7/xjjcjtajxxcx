@@ -1,0 +1,28 @@
+  /* 路线列表样式 */
+    .route-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .route-list li {
+      margin: 10px 0;
+      font-size: 1rem;
+      color: #333;
+    }
+  .route-list li::after {
+  content: "↓";
+  display: block;
+  margin: 5px 0;
+  font-size: 1.2rem;
+  color: #333;
+  /* 新增：让箭头水平居中 */
+  text-align: center; 
+}
+
+    /* 最后一个箭头隐藏 */
+    .route-list li:last-child::after {
+      content: none;
+    }

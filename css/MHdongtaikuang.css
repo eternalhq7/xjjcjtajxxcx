@@ -1,0 +1,65 @@
+/* 模态框容器：固定在视口，覆盖整个页面 */
+.modal {
+  display: none; /* 默认隐藏 */
+  position: fixed; 
+  z-index: 9999; /* 最上层，覆盖背景页面 */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9); /* 黑色半透明背景 */
+}
+
+/* 模态框内容：图片自适应，支持浏览器缩放 */
+.modal-content {
+  margin: auto;
+  display: block;
+  max-width: 90%; /* 留边距，避免贴边 */
+  max-height: 50vh; /* 限制最大高度，避免超出视口 */
+  width: auto; /* 允许图片按比例缩放 */
+  height: auto; /* 允许图片按比例缩放 */
+  object-fit: contain; /* 保持图片比例 */
+}
+
+/* 关闭按钮样式 */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  color: #bbb;
+}
+
+/* 图片卡片样式（可选） */
+.image-card {
+  max-width: 80%; 
+  background: #f9f9f9; 
+  border-radius: 10px; 
+  padding: 15px; 
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+  cursor: pointer; 
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.image-card img {
+  max-width: 100%; 
+  max-height:auto; 
+width: auto;
+height: auto;
+object-fit: contain;
+  border-radius: 5px; 
+  margin-bottom: 10px;
+}
+
+.image-card p {
+  margin: 0; 
+  font-weight: 500;
+}

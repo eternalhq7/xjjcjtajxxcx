@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>安检知识小资讯</title>
+  <link rel="stylesheet" href="../css/sercurity-info.css">
+  <link rel="stylesheet" href="../css/logo.css">
+  <script src="../js/history-back.js"></script> 
+  <script src="../js/search.js"></script> 
+  <script src="../js/opennewpage.js"></script> 
+</head>
+
+<body>
+<div class="container">
+<div id="security-info" class="page">
+    <div class="page-header">
+        <button class="back-btn" onclick="goToHomePage()">
+            <i class="fa fa-arrow-left"></i>
+        </button>
+        <h2>安检知识小资讯</h2>
+    </div>
+
+    <div class="search-bar">
+        <input type="text" class="search-box" id="module-search" placeholder="搜索安检知识...">
+    </div>
+
+    <p style="text-align: center; margin-bottom: 20px; font-size: 1.1rem; color: #666;">
+        以下是机场安检常见物品，点击模块查看内容
+    </p>
+
+    <!-- 一级子模块（5个大类） -->
+    <div class="card-container" id="module-container">
+        <div class="card highlight" data-keywords="充电宝 锂电池 电池 破损 三无 移动电源 额定能量 容量限制 备用电池 超过100Wh 标识要求 包装规范 电子烟  电动轮椅电池 爆炸" onclick="openNewPage('battery-security.html')">
+            <i class="fa fa-bolt"></i>
+            <h3>充电宝、锂电池类</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="雪崩救援背包 压缩气体罐 气袋 安全气囊 雪地运动 自动充气 品牌  气罐 TSA  滑雪装备 登山 压力 安全" onclick="openNewPage('avalanche-backpack.html')">
+            <i class="fa fa-snowboarding"></i>
+            <h3>雪崩救援背包</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="海南航空 海航 客舱宠物 运输 宠物票 航空箱 健康证明 种类限制 检疫手续 训练要求 食物携带 特殊犬种 动物 猫 狗 鸡 鸭 鹅 蛇 猴子 鹦鹉" onclick="openNewPage('pet-transport.html')">
+            <i class="fa fa-paw"></i>
+            <h3>海航客舱宠物运输</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="液态物品 携带规定 随身容量 化妆品 瓶装水 乳液面霜 药品 婴儿奶粉 燃料 酒精 凝胶 饮料  喷雾 护理液 蜂蜜 中药汤剂 液态食品 " onclick="openNewPage('liquid-goods.html')">
+            <i class="fa fa-tint"></i>
+            <h3>液态物品携带</h3>
+        </div>
+
+        <div class="card highlight" data-keywords="携运 人体 捐献 器官 运输 心脏 心 肝 脾 胃 肾 移植 红十字会器官 容器 绿色通道 血液 医疗" onclick="openNewPage('organ-transport.html')">
+            <i class="fa fa-heartbeat"></i>
+            <h3>携运人体捐献器官</h3>
+	    </div>
+
+ <div class="card highlight" data-keywords="人体 运输 携运 医疗血液运输 冷链运输 包装 温度 运输箱 血小板 血浆储存 国际检疫 血站标准 红十字会 防泄漏 IATA 医疗机构配送 质量控制 容器" onclick="openNewPage('blood-transport.html')">
+            <i class="fa fa-blood"></i>
+            <h3>医疗血液运输</h3>
+	    </div>
+
+ <div class="card highlight" data-keywords="干冰 携带 包装 容器 泄露 挥发 氧气 接触 误食 冻伤 温度 " onclick="openNewPage('dry-ice.html')">
+            <i class="fa fa-ice"></i>
+            <h3>干冰携带安全指南</h3>
+	    </div>
+
+ <div class="card highlight" data-keywords="工作犬 服务 导盲 助听 残疾 助残  航空政策 证件 品种限制 训练标准 客舱 免疫证明 镇静剂 检疫 疫苗 无障碍 航空箱 宠物 过敏 服务热线" onclick="openNewPage('service-dog.html')">
+            <i class="fa fa-dog"></i>
+            <h3>服务犬乘机指南</h3>
+            </div>
+
+    </div>
+</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+/* 二级子模块网格布局 */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+  gap: 20px; 
+  width: 90%; 
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 15px;
+}
+
+/* 二级卡片样式 */
+.detail-card {
+  background: rgba(255, 255, 255, 0.6); 
+  border: 1px solid #0078d4; 
+  border-radius: 10px; 
+  padding: 20px; 
+  text-align: left; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); 
+  transition: all 0.3s ease; 
+  cursor: pointer; 
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+}
+
+.detail-card:hover {
+  transform: translateY(-3px); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+  border-color: #005a9e; 
+}
+
+.detail-card h4 {
+  font-size: 1rem; 
+  color: #003366; 
+  margin: 0 0 8px 0; 
+  display: flex;
+  align-items: center; 
+}
+
+.detail-card h4 i {
+  margin-right: 8px; 
+  font-size: 1.2rem; 
+  color: #0066cc; 
+}
+
+.detail-card p {
+  font-size: 0.9rem; 
+  color: #666; 
+  margin: 0; 
+  line-height: 1.4; 
+}
